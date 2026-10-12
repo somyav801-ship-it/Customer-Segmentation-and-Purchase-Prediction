@@ -14,6 +14,8 @@ Which customers are likely to purchase again in the next 30 days?
 
 What should the business do differently for each group?
 
+
+
 **2. Dataset**
 
 File: online_retail.csv, transactional data from a UK-based online retailer (public UCI Online Retail dataset)
@@ -26,43 +28,47 @@ Size: 99,999 rows covering about 12 weeks (Dec 2010 to Feb 2011)
 Scope note: the dataset has no demographic fields such as age or gender (only Country), so segmentation is based on purchase behaviour. Only about 12 weeks of data were available, so "future" purchases are defined as the last 30 days.
 
 
+
+
 **3. Approach**
 
 
 **3.1 Data cleaning**
 
-924 duplicate rows: removed
+-924 duplicate rows: removed
 
-About 35% of rows with no CustomerID: removed, because customers cannot be tracked without an ID
+-About 35% of rows with no CustomerID: removed, because customers cannot be tracked without an ID
 
-Cancelled invoices (InvoiceNo starts with "C") and negative or zero Quantity/UnitPrice: removed
+-Cancelled invoices (InvoiceNo starts with "C") and negative or zero Quantity/UnitPrice: removed
 Missing product descriptions: filled with "UNKNOWN"
 
-Two mixed date formats in InvoiceDate: standardised to YYYY-MM-DD HH:MM:SS
+-Two mixed date formats in InvoiceDate: standardised to YYYY-MM-DD HH:MM:SS
 
-No revenue column: created TotalPrice = Quantity x UnitPrice
+-No revenue column: created TotalPrice = Quantity x UnitPrice
 
 
 Result: 62,408 clean rows with no missing values (online_retail_clean.csv).
+
 
 
 **3.2 Feature engineering**
 
 To avoid data leakage, features use only data before a cutoff date (30 days before the last transaction). The target comes from the 30 days after it.
 
-Recency: days since last purchase
+-Recency: days since last purchase
 
-Frequency: number of distinct orders
+-Frequency: number of distinct orders
 
-Monetary: total spend (historical customer lifetime value)
+-Monetary: total spend (historical customer lifetime value)
 
-Average Order Value: Monetary divided by Frequency
+-Average Order Value: Monetary divided by Frequency
 
-Unique Products: distinct products purchased
+-Unique Products: distinct products purchased
 
-Avg Items per Order: items divided by orders
+-Avg Items per Order: items divided by orders
 
-Tenure: days since first purchase
+-Tenure: days since first purchase
+
 
 
 **3.3 Segmentation**
@@ -73,6 +79,8 @@ Chose the number of clusters using the elbow method and silhouette score
 Fitted K-Means with k = 4 on 1,178 customers and profiled each cluster
 
 
+
+
 **3.4 Predictive modelling**
 
 Classification: Decision Tree (depth 4, class-balanced) predicts whether a customer will purchase in the next 30 days
@@ -80,57 +88,63 @@ Classification: Decision Tree (depth 4, class-balanced) predicts whether a custo
 Regression: Random Forest predicts future spend, modelled on the log scale because spend is highly skewed
 
 
+
 **4. Results**
 
 Customer segments
 
-Champions (109 customers, 9% of customers, 49% of revenue)
+-Champions (109 customers, 9% of customers, 49% of revenue)
 
-Average recency 10 days, 5.6 orders, average spend 4,572
+-Average recency 10 days, 5.6 orders, average spend 4,572
 Repeat-purchase rate: 72%
 
-Loyal / frequent (255 customers, 22% of customers, 26% of revenue)
+-Loyal / frequent (255 customers, 22% of customers, 26% of revenue)
 
-Average recency 30 days, 2.2 orders, average spend 1,028
+-Average recency 30 days, 2.2 orders, average spend 1,028
 Repeat-purchase rate: 50%
 
-Potential / new (266 customers, 23% of customers, 12% of revenue)
+-Potential / new (266 customers, 23% of customers, 12% of revenue)
 
-Average recency 8 days, 1.3 orders, average spend 456
+-Average recency 8 days, 1.3 orders, average spend 456
 Repeat-purchase rate: 30%
 
-At-risk / low value (548 customers, 47% of customers, 14% of revenue)
+-At-risk / low value (548 customers, 47% of customers, 14% of revenue)
 
-Average recency 43 days, 1.0 orders, average spend 262
+-Average recency 43 days, 1.0 orders, average spend 262
 Repeat-purchase rate: 21%
 
 Key finding: 9% of customers generate almost half of the revenue, and nearly half of all customers bought only once and have not returned recently.
 
 
+
 **Model performance**
+
 
 **Decision Tree (classification)**
 
-Accuracy: 0.72
-Precision: 0.58
-Recall: 0.68
+-Accuracy: 0.72
+-Precision: 0.58
+-Recall: 0.68
 
 **Random Forest (regression)**
 
-**RMSE (log scale)**: 2.67 vs. 2.91 for a baseline that always predicts the mean
+-RMSE (log scale): 2.67 vs. 2.91 for a baseline that always predicts the mean
 
 
 The classifier identifies about two-thirds of returning customers, and purchase frequency is the strongest predictor. The regression improvement over the baseline is modest, which is expected with a short time window and a few very large buyers, so treat the spend model as a proof of concept, not a production forecast.
 
+
+
 **5. Business Recommendations**
 
-Champions: VIP programme, early access to new products and referral rewards. Protect the relationship rather than discounting heavily.
+-Champions: VIP programme, early access to new products and referral rewards. Protect the relationship rather than discounting heavily.
 
-Loyal / frequent: loyalty points, product bundles and cross-selling to raise average order value.
+-Loyal / frequent: loyalty points, product bundles and cross-selling to raise average order value.
 
-Potential / new: welcome email series and a second-purchase incentive to turn one-time buyers into repeat customers.
+-Potential / new: welcome email series and a second-purchase incentive to turn one-time buyers into repeat customers.
 
-At-risk / low value: time-limited win-back campaign through low-cost channels such as email. Limit spend on this group.
+-At-risk / low value: time-limited win-back campaign through low-cost channels such as email. Limit spend on this group.
+
 
 
 **6. Repository Structure**
@@ -143,12 +157,15 @@ online_retail_clean.csv: cleaned transaction data
 
 README.md: this file
 
+
+
 **7. How to Run**
 
 Install the libraries: pip install pandas numpy scikit-learn matplotlib seaborn 
  Customer_Segmentation.ipynb(https://github.com/somyav801-ship-it/Customer-Segmentation-and-Purchase-Prediction/blob/main/Customer_Segmentation%20.ipynb)
 
  SQL Queries(https://github.com/somyav801-ship-it/Customer-Segmentation-and-Purchase-Prediction/blob/main/customer_segmentation.sql)
+
  
 
 **8. Author**
