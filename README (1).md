@@ -2,7 +2,7 @@
 
 Segmenting e-commerce customers by purchasing behaviour with RFM analysis and K-Means clustering, then predicting which customers will buy again and how much they will spend. Each segment comes with a recommended marketing action.
 
-**Tools:** Python (Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn), MySQL, Jupyter Notebook
+**Tools:** Python (Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn), MySQL 
 
 ---
 
@@ -99,30 +99,30 @@ The classifier identifies about two-thirds of returning customers, and purchase 
 - **Potential / new:** welcome email series and a second-purchase incentive to turn one-time buyers into repeat customers.
 - **At-risk / low value:** time-limited win-back campaign through low-cost channels such as email. Limit spend on this group.
 
-## 6. Limitations and Next Steps
 
-- Only about 12 weeks of data and no demographic fields. Next step: rerun on a full year of data to capture seasonality and make the prediction window more reliable.
-- Segment sizes and model metrics are specific to this sample.
-- Possible extensions: add product-category preferences, compare K-Means with hierarchical clustering or Gaussian mixture models, and tune the models with cross-validation.
-
-## 7. Repository Structure
+## 6. Repository Structure
 
 - `Customer_Segmentation.ipynb`: full analysis with charts
-- `customer_segmentation.sql`: SQL version (MySQL 8) covering cleaning, features and RFM segments
+- `customer_segmentation.sql`: SQL version (MySQL ) covering cleaning, features and RFM segments
 - `online_retail_clean.csv`: cleaned transaction data
 - `online_retail.csv`: raw data
-- `images/`: chart screenshots
 - `README.md`: this file
 
-## 8. How to Run
+## 7. How to Run
 
 1. Install the libraries: `pip install pandas numpy scikit-learn matplotlib seaborn jupyter`
+
 2. Place `online_retail.csv` in the same folder as the notebook
-3. Open the notebook: `jupyter notebook Customer_Segmentation.ipynb`
 
-For the SQL version, update the file path in the `LOAD DATA` statement and run the script in MySQL 8 or later.
 
-## 9. Author
+3.  Customer_Segmentation.ipynb(https://github.com/somyav801-ship-it/Customer-Segmentation-and-Purchase-Prediction/blob/main/Customer_Segmentation%20.ipynb)
+
+
+4.  SQL (https://github.com/somyav801-ship-it/Customer-Segmentation-and-Purchase-Prediction/blob/main/customer_segmentation.sql)
+
+
+
+## 8. Author
 
 **Somya Verma**, Data Analyst
 Skills: Python, SQL, Advanced Excel, Power BI, MySQL
